@@ -1035,4 +1035,18 @@ angular.module('controllersZ', ['ui.router', 'ui.bootstrap', 'servicesZ'])
                 $("#sidebar-list .activeSelect").scrollintoview();
             });
         });
+        // Add a function to load data from an HTTP resource
+        $scope.loadHttp = function (url) {
+            var r = new Request(url);
+            fetch( r ).then(response => response.blob()).then(blob => {
+                console.log(blob);
+                var fn = url.split('/')
+                fn = fn[fn.length - 1] ;
+                var fl = new File([blob, ], fn);
+                console.log(fl);
+                $scope.$apply(function () {
+                    $scope.addFiles([fl, ]);
+                });
+            });
+        };
     }]);

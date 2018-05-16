@@ -85,5 +85,30 @@
             <ng-include src="'templates/footer.html'"></ng-include>
         </div>
     </div>
+
+    <script ng-cloak>
+        // Load a dummy data file automagically
+
+        var waitForRenderAndLoad;
+
+        angular.element( document ).ready(function () {
+           console.log('DOM Ready');
+           // Get $timeout from the body injector, that should load fast
+           var tofunc = angular.element(' body ').injector().get('$timeout');
+           var httpang = angular.element(' body ').injector().get('$http');
+           waitForRenderAndLoad = function () {
+                if ( httpang.pendingRequests.length > 0 ) {
+                    tofunc(waitForRenderAndLoad);
+                } else {
+                    s = angular.element(' #sidebarDrop ').scope();
+                    s.loadHttp('http://0.0.0.0:8080/tests/testFits/alldata_combined_runz_x12_b02.fits');
+                }
+            }
+
+           // Call this function via the JavaScript console to do the data load
+           // waitForRenderAndLoad();
+        });
+    </script>
+
 </body>
 </html>
