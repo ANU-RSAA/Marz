@@ -1,0 +1,36 @@
+<html>
+
+<head>
+    <title>MARZ Parent Window Tester</title>
+
+    <script>
+
+        var marzWindow = null ;
+
+        var checkWindowAndLoad = function (url) {
+            if ((marzWindow == null) || (marzWindow.self != window)) {
+                marzWindow = window.open('http://0.0.0.0:8080');
+                if (!marzWindow.opener) { marzWindow.opener = this.window ; }
+                marzWindow.fitsURL = url;
+            }
+            marzWindow.onload = function () {
+                // console.log(marzWindow.fitsURL);
+                marzWindow.window.waitForRenderAndLoad(marzWindow.fitsURL);
+                console.log('Completed onload function');
+            }
+        };
+
+    </script>
+</head>
+
+<body>
+
+<p class="text-align: center; "><a href="#" onclick="marzWindow=window.open('http://0.0.0.0:8080');">Open Marz</a></p>
+
+<p class="text-align: center; "><a href="#" onclick="marzWindow.waitForRenderAndLoad('http://0.0.0.0:8080/tests/testFits/alldata_combined_runz_x12_b02.fits');">Give Marz some data</a></p>
+
+<p class="text-align: center; "><a href="#" onclick="checkWindowAndLoad('http://0.0.0.0:8080/tests/testFits/alldata_combined_runz_x12_b02.fits');">Combined open-and-load</a></p>
+
+</body>
+
+</html>

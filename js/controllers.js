@@ -1037,8 +1037,11 @@ angular.module('controllersZ', ['ui.router', 'ui.bootstrap', 'servicesZ'])
         });
         // Add a function to load data from an HTTP resource
         $scope.loadHttp = function (url) {
+            console.log('Inside loadHttp');
+            console.log('Attempting to load remote FITS from: '.concat(url));
             var r = new Request(url);
             fetch( r ).then(response => response.blob()).then(blob => {
+                console.log('Inside loadHttp fetch');
                 console.log(blob);
                 var fn = url.split('/')
                 fn = fn[fn.length - 1] ;
