@@ -87,17 +87,14 @@
     </div>
 
     <script>
-        // Load a dummy data file automagically
-
+        // Set up to load files from HTTP once page is done load/render
         angular.element( document ).ready(function () {
-           // console.log('DOM Ready');
-           console.log('In DOM Ready, the window fitsURL is: '.concat(window.fitsURL));
            // Get $timeout from the body injector, that should load fast
            var tofunc = angular.element(' body ').injector().get('$timeout');
            var httpang = angular.element(' body ').injector().get('$http');
            window.waitForRenderAndLoad = function (url) {
                 if ( httpang.pendingRequests.length > 0 ) {
-                    tofunc(waitForRenderAndLoad);
+                    tofunc(function() {waitForRenderAndLoad(url)}, 500, false);
                 } else {
                     s = angular.element(' #sidebarDrop ').scope();
                     s.loadHttp(url);

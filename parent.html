@@ -8,15 +8,17 @@
         var marzWindow = null ;
 
         var checkWindowAndLoad = function (url) {
-            if ((marzWindow == null) || (marzWindow.self != window)) {
+            if ((marzWindow == null) || (marzWindow.self != marzWindow)) {
+                console.log('Triggering external Marz open');
                 marzWindow = window.open('http://0.0.0.0:8080');
                 if (!marzWindow.opener) { marzWindow.opener = this.window ; }
-                marzWindow.fitsURL = url;
-            }
-            marzWindow.onload = function () {
-                // console.log(marzWindow.fitsURL);
-                marzWindow.window.waitForRenderAndLoad(marzWindow.fitsURL);
-                console.log('Completed onload function');
+                marzWindow.onload = function () {
+                    console.log('Triggering external data load (new window)');
+                    marzWindow.window.waitForRenderAndLoad(url);
+                }
+            } else {
+                console.log('Triggering external data load (existing window)');
+                marzWindow.window.waitForRenderAndLoad(url);
             }
         };
 
