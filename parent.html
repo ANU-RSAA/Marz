@@ -14,11 +14,13 @@
                 if (!marzWindow.opener) { marzWindow.opener = this.window ; }
                 marzWindow.onload = function () {
                     console.log('Triggering external data load (new window)');
-                    marzWindow.window.waitForRenderAndLoad(url);
+                    //marzWindow.window.waitForRenderAndLoad(url);
+                    marzWindow.window.postMessage(url, "*");
                 }
             } else {
                 console.log('Triggering external data load (existing window)');
-                marzWindow.window.waitForRenderAndLoad(url);
+                //marzWindow.window.waitForRenderAndLoad(url);
+                marzWindow.window.postMessage(url, "*");
             }
         };
 

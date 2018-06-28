@@ -101,6 +101,12 @@
                 }
             }
 
+            window.addEventListener('message', function (e) {
+                console.log('Received this data:');
+                console.log(e.data);
+                window.waitForRenderAndLoad(e.data);
+            });
+
            // Call this function via the JavaScript console to do the data load
            // waitForRenderAndLoad('http://0.0.0.0:8080/tests/testFits/alldata_combined_runz_x12_b02.fits');
         });
